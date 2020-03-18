@@ -8,23 +8,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/country")
-public class Insert extends HttpServlet {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3301894632450879289L;
+@WebServlet("/update")
+public class Update extends HttpServlet {
 
 	/**
 	 * 
 	 */
-	public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	private static final long serialVersionUID = -4709252279621713813L;
 
-		/* String country = req.getParameter("country"); */
+	/**
+	 * 
+	 */
+
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+
+		String id = req.getParameter("id");
 		String country = req.getParameter("country");
-		Country coun = new Country();
-		coun.setCountry(country);
 		try {
 			// load Driver class
 			Class.forName("com.mysql.jdbc.Driver");
@@ -32,13 +33,14 @@ public class Insert extends HttpServlet {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/country", "root", "");
 			// create statement
 			Statement stmt = con.createStatement();
-			String sql = "insert into country (Country) values('" + coun.getCountry() + "')";
+			String sql = "update country set Country='" + country + "' where Id=" + id;
+
 			stmt.executeUpdate(sql);
+
+			res.sendRedirect("info");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		res.sendRedirect("index.html");
-
 	}
-
 }

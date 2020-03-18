@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Kutta Project</title>
+<title>Edit</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -28,26 +28,23 @@
 	<br>
 	<div class="container-fluid">
 		<div class="row">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Countries Entered so far</th>
-						</tr>
-				</thead>
-				<tbody>
-				<c:forEach var="row" items="${countryList}">
-						<tr>
-						<td><c:out value="${row.id}" /></td>
-							<td><c:out value="${row.country}" /></td>
-							<td><a href='delete?id="<c:out value="${row.id}" />"'>DELETE</a></td>
-							<td><a href='edit?id="<c:out value="${row.id}" />"'>EDIT</a></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+			<div class="col-sm-3"></div>
+			<div class="card col-sm-6">
+				<div class="card-body">
+					<form action="update" method="post">
+						<input type="hidden" name="id" id="id"
+							value="<c:out value="${country.id}"/>">
+						<div class="form-group">
+							<label for="country">Country:</label> <input type="text" name="country"
+								class="form-control" placeholder="Enter your country" id="country"
+								value="<c:out value="${country.country}"/>">
+									</div>
+									<button type="submit" class="btn btn-primary" value="Update">Update</button>
+					</form>
+				</div>
+			</div>
+			<div class="col-sm-3"></div>
 		</div>
 	</div>
-
-
 </body>
 </html>

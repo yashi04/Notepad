@@ -8,23 +8,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/country")
-public class Insert extends HttpServlet {
+@WebServlet("/delete")
+public class Delete extends HttpServlet {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3301894632450879289L;
+	private static final long serialVersionUID = -4358616397573965123L;
 
 	/**
 	 * 
 	 */
 	public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		String id = req.getParameter("id");
 
-		/* String country = req.getParameter("country"); */
-		String country = req.getParameter("country");
-		Country coun = new Country();
-		coun.setCountry(country);
 		try {
 			// load Driver class
 			Class.forName("com.mysql.jdbc.Driver");
@@ -32,13 +31,13 @@ public class Insert extends HttpServlet {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/country", "root", "");
 			// create statement
 			Statement stmt = con.createStatement();
-			String sql = "insert into country (Country) values('" + coun.getCountry() + "')";
-			stmt.executeUpdate(sql);
+			String sql = "delete from country where Id=" + id;
+			int i = stmt.executeUpdate(sql);
+			if (i > 0) {
+				res.sendRedirect("info");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		res.sendRedirect("index.html");
-
 	}
-
 }
